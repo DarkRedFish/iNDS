@@ -150,7 +150,15 @@
     if (indexPath.section == 0) { // Game
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"iNDSGame"];
         if (indexPath.row >= games.count) return [UITableViewCell new];
+        
+        // Order game list by name
+        NSArray *sortedArray = [games sortedArrayUsingComparator:^NSComparisonResult(iNDSGame *first, iNDSGame *second){
+            return [first.gameTitle compare:second.gameTitle];
+        }];
+        games = sortedArray;
+        
         iNDSGame *game = games[indexPath.row];
+        
         if (game.gameTitle) {
             // use title from ROM
             NSArray *titleLines = [game.gameTitle componentsSeparatedByString:@"\n"];
